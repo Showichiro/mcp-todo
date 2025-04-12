@@ -6,8 +6,8 @@ import {
   byProjectKey,
   todoKey,
 } from "../constants.ts";
-import { err, ok, Result } from "../../../utils/result.ts";
-import { Todo } from "../types.ts";
+import { err, ok, type Result } from "../../../utils/result.ts";
+import type { Todo } from "../types.ts";
 
 export type CreateTodoSuccess = {
   id: string;

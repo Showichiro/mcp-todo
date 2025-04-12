@@ -1,4 +1,4 @@
-import { Content, Tool } from "npm:@modelcontextprotocol/sdk";
+import type { Content, Tool } from "npm:@modelcontextprotocol/sdk@1.9.0";
 
 export type Module = {
   tool: Tool;

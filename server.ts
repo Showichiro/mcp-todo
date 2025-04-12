@@ -1,4 +1,4 @@
-import { StdioServerTransport } from "npm:@modelcontextprotocol/sdk/server/stdio.js";
+import { StdioServerTransport } from "npm:@modelcontextprotocol/sdk@1.9.0/server/stdio.js";
 import { createServer } from "./server-factory.ts";
 import { CreateTodoModule } from "./tools/todo/create-todo-module.ts";
 import { GetTodoByIdModule } from "./tools/todo/get-by-id-module.ts";

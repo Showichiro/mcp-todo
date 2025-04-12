@@ -1,4 +1,4 @@
-import { Module } from "../../types.ts";
+import type { Module } from "../../types.ts";
 import { $object, $string } from "@showichiro/validators";
 import { getTodoById } from "./repository/get-todo-by-id.ts";
 import { isErr } from "../../utils/result.ts";

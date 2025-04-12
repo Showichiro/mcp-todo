@@ -1,11 +1,11 @@
-import { Module } from "./types.ts";
-import { Server } from "npm:@modelcontextprotocol/sdk/server/index.js";
+import type { Module } from "./types.ts";
+import { Server } from "npm:@modelcontextprotocol/sdk@1.9.0/server/index.js";
 import {
   CallToolRequestSchema,
   ListResourcesRequestSchema,
   ListToolsRequestSchema,
-  Tool,
-} from "npm:@modelcontextprotocol/sdk/types.js";
+  type Tool,
+} from "npm:@modelcontextprotocol/sdk@1.9.0/types.js";
 
 export const createServer = (opt: {
   serverName: string;

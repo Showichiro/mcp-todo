@@ -1,5 +1,5 @@
-import { err, ok, Result } from "../../../utils/result.ts";
-import { Priority, Todo } from "../types.ts";
+import { err, ok, type Result } from "../../../utils/result.ts";
+import type { Priority, Todo } from "../types.ts";
 import { byPriorityKey, todoKey } from "../constants.ts";
 
 export type GetTodosByPrioritySuccess = {

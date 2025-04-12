@@ -1,4 +1,4 @@
-import { Todo } from "./types.ts";
+import type { Todo } from "./types.ts";
 
 export const todoToString = (todo: Todo) => {
   const parts: string[] = [];
