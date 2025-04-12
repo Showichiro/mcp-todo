@@ -1,4 +1,4 @@
-import { Module } from "../../types.ts";
+import type { Module } from "../../types.ts";
 import {
   $array,
   $object,
@@ -7,7 +7,7 @@ import {
   $string,
   type Validator,
 } from "@showichiro/validators";
-import { priorities, Priority } from "./types.ts";
+import { priorities, type Priority } from "./types.ts";
 import { createTodo } from "./repository/create-todo.ts";
 import { isErr } from "../../utils/result.ts";
 import { withKv } from "../../kv-factory.ts";

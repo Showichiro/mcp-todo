@@ -1,10 +1,10 @@
-import { Module } from "../../types.ts";
-import { $object, $optional, Validator } from "@showichiro/validators";
+import type { Module } from "../../types.ts";
+import { $object, $optional, type Validator } from "@showichiro/validators";
 import { getTodosByPriority } from "./repository/get-todos-by-priority.ts";
 import { isErr } from "../../utils/result.ts";
 import { withKv } from "../../kv-factory.ts";
 import { todoToString } from "./todo-to-string.ts";
-import { priorities, Priority } from "./types.ts";
+import { priorities, type Priority } from "./types.ts";
 
 // カスタムバリデーター: 優先度の文字列チェック
 const $priority: Validator<Priority> = (val: unknown): val is Priority => {

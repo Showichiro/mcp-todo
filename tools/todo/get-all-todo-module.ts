@@ -1,4 +1,4 @@
-import { Module } from "../../types.ts";
+import type { Module } from "../../types.ts";
 import { getAllTodos } from "./repository/get-all-todos.ts";
 import { isErr } from "../../utils/result.ts";
 import { withKv } from "../../kv-factory.ts";
