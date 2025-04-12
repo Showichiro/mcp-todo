@@ -1,7 +1,8 @@
 # mcp-todo
 
 todo.txt形式に基づいたTodo管理ツールをMCP（Model Context
-Protocol）サーバーとして提供します。\n データは
+Protocol）サーバーとして提供します。
+データは
 [deno kv](https://docs.deno.com/deploy/kv/manual/)
 を利用してローカルに保持されます。
 
