@@ -11,12 +11,6 @@ Protocol）サーバーとして提供します。 データは
 
 ## セットアップ
 
-### リポジトリのクローン
-
-```bash
-git clone https://github.com/s-uchihori/mcp-todo.git
-```
-
 ### MCPサーバー設定
 
 Clineなどのクライアントツールで使用するために、MCPサーバー設定を構成します。
@@ -31,7 +25,7 @@ Clineなどのクライアントツールで使用するために、MCPサーバ
         "run",
         "-A",
         "--unstable-kv",
-        "/path/to/mcp-todo/server.ts"
+        "jsr:@showichiro/mcp-todo"
       ]
     }
   }
