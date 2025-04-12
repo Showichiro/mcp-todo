@@ -1,5 +1,5 @@
 import { Module } from "../../types.ts";
-import { $object, $optional, $string, Validator } from "@showichiro/validators";
+import { $object, $optional, $string } from "@showichiro/validators";
 import { getTodosByContext } from "./repository/get-todos-by-context.ts";
 import { isErr } from "../../utils/result.ts";
 import { withKv } from "../../kv-factory.ts";
@@ -10,7 +10,7 @@ const $getTodosByContextInput = $object(
   {
     context: $optional($string),
   },
-  false
+  false,
 );
 
 export const GetTodosByContextModule: Module = {
@@ -34,7 +34,8 @@ export const GetTodosByContextModule: Module = {
         content: [
           {
             type: "text",
-            text: "Invalid input: Please provide a valid context string or omit for all contexts",
+            text:
+              "Invalid input: Please provide a valid context string or omit for all contexts",
           },
         ],
         isError: true,

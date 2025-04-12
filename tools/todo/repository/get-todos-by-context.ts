@@ -13,7 +13,7 @@ export type GetTodosByContextError = {
 
 export const getTodosByContext = async (
   kv: Deno.Kv,
-  context?: string
+  context?: string,
 ): Promise<Result<GetTodosByContextSuccess, GetTodosByContextError>> => {
   try {
     const todos: Todo[] = [];
