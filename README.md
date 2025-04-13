@@ -43,6 +43,8 @@ Clineなどのクライアントツールで使用するために、MCPサーバ
 - `mcp_todo_get_all`: すべてのTodoアイテムを取得
 - `mcp_todo_get_by_priority`: 優先度によってTodoアイテムをフィルタリング
 - `mcp_todo_get_by_context`: コンテキストによってTodoアイテムをフィルタリング
+- `mcp_todo_get_by_project`: プロジェクトによってTodoアイテムをフィルタリング
+- `mcp_todo_get_by_completion`: 完了状態によってTodoアイテムをフィルタリング
 
 ## Todo形式
 
@@ -92,6 +94,22 @@ x (A) 2023-04-01 2023-03-15 レポートを完成させる +仕事 @オフィス
 ```json
 {
   "context": "仕事"
+}
+```
+
+### プロジェクトによるTodoの取得
+
+```json
+{
+  "project": "個人"
+}
+```
+
+### 完了状態によるTodoの取得
+
+```json
+{
+  "completed": false
 }
 ```
 
