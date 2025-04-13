@@ -33,19 +33,19 @@ export const createTodo = async (
 
     // プロジェクトごとのインデックス
     for (const project of todo.projects) {
-      atomic.set(getProjectIndexListKey(project, id), id);
+      atomic.set([...getProjectIndexListKey(project), id], id);
     }
 
     // コンテキストごとのインデックス
     for (const context of todo.contexts) {
-      atomic.set(getContextIndexListKey(context, id), id);
+      atomic.set([...getContextIndexListKey(context), id], id);
     }
 
     // 優先度のインデックス
-    atomic.set(getPriorityIndexListKey(todo.priority, id), id);
+    atomic.set([...getPriorityIndexListKey(todo.priority), id], id);
 
     // 完了状態のインデックス
-    atomic.set(getCompletionIndexListKey(todo.completed, id), id);
+    atomic.set([...getCompletionIndexListKey(todo.completed), id], id);
 
     const result = await atomic.commit();
 

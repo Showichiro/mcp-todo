@@ -1,7 +1,7 @@
 import { err, ok, type Result } from "../../../utils/result.ts";
 import type { Priority, Todo } from "../types.ts";
-import { byPriorityKey } from "../constants.ts";
 import { getPriorityIndexListKey, getTodoKey } from "../utils/get-kv-key.ts";
+import { getAllTodos } from "./get-all-todos.ts";
 
 export type GetTodosByPrioritySuccess = {
   todos: Todo[];
@@ -17,33 +17,28 @@ export const getTodosByPriority = async (
   priority?: Priority,
 ): Promise<Result<GetTodosByPrioritySuccess, GetTodosByPriorityError>> => {
   try {
-    const todos: Todo[] = [];
-
-    if (priority) {
-      // 特定の優先度のTodoを取得
-      const entries = kv.list<string>({
-        prefix: getPriorityIndexListKey(priority),
-      });
-
-      for await (const entry of entries) {
-        const todoId = entry.value;
-        const todoResult = await kv.get<Todo>(getTodoKey(todoId));
-
-        if (todoResult.value) {
-          todos.push(todoResult.value);
-        }
+    if (!priority) {
+      const result = await getAllTodos(kv);
+      if (!result.ok) {
+        return err({
+          message: result.error.message,
+          cause: result.error.cause,
+        });
       }
-    } else {
-      // すべての優先度のTodoを取得（空の優先度も含む）
-      const entries = kv.list<string>({ prefix: [byPriorityKey] });
+      return result;
+    }
 
-      for await (const entry of entries) {
-        const todoId = entry.value;
-        const todoResult = await kv.get<Todo>(getTodoKey(todoId));
+    const todos: Todo[] = [];
+    const entries = kv.list<string>({
+      prefix: getPriorityIndexListKey(priority),
+    });
 
-        if (todoResult.value) {
-          todos.push(todoResult.value);
-        }
+    for await (const entry of entries) {
+      const todoId = entry.value;
+      const todoResult = await kv.get<Todo>(getTodoKey(todoId));
+
+      if (todoResult.value) {
+        todos.push(todoResult.value);
       }
     }
 
