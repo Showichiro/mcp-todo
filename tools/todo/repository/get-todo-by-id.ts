@@ -1,6 +1,6 @@
 import { err, ok, type Result } from "../../../utils/result.ts";
 import type { Todo } from "../types.ts";
-import { todoKey } from "../constants.ts";
+import { getTodoKey } from "../utils/get-kv-key.ts";
 
 export type GetTodoByIdSuccess = {
   todo: Todo;
@@ -16,7 +16,7 @@ export const getTodoById = async (
   id: string,
 ): Promise<Result<GetTodoByIdSuccess, GetTodoByIdError>> => {
   try {
-    const result = await kv.get<Todo>([todoKey, id]);
+    const result = await kv.get<Todo>(getTodoKey(id));
 
     if (!result.value) {
       return err({

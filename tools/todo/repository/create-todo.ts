@@ -1,13 +1,13 @@
 import { generateUUID } from "../../../utils/generate-uuid.ts";
-import {
-  byCompletion,
-  byContextKey,
-  byPriorityKey,
-  byProjectKey,
-  todoKey,
-} from "../constants.ts";
 import { err, ok, type Result } from "../../../utils/result.ts";
 import type { Todo } from "../types.ts";
+import {
+  getCompletionIndexListKey,
+  getContextIndexListKey,
+  getPriorityIndexListKey,
+  getProjectIndexListKey,
+  getTodoKey,
+} from "../utils/get-kv-key.ts";
 
 export type CreateTodoSuccess = {
   id: string;
@@ -29,23 +29,23 @@ export const createTodo = async (
     const atomic = kv.atomic();
 
     // メインのTodoエントリー
-    atomic.set([todoKey, id], todoWithId);
+    atomic.set(getTodoKey(id), todoWithId);
 
     // プロジェクトごとのインデックス
     for (const project of todo.projects) {
-      atomic.set([byProjectKey, project, id], id);
+      atomic.set([...getProjectIndexListKey(project), id], id);
     }
 
     // コンテキストごとのインデックス
     for (const context of todo.contexts) {
-      atomic.set([byContextKey, context, id], id);
+      atomic.set([...getContextIndexListKey(context), id], id);
     }
 
     // 優先度のインデックス
-    atomic.set([byPriorityKey, todo.priority ?? "", id], id);
+    atomic.set([...getPriorityIndexListKey(todo.priority), id], id);
 
     // 完了状態のインデックス
-    atomic.set([byCompletion, todo.completed, id], id);
+    atomic.set([...getCompletionIndexListKey(todo.completed), id], id);
 
     const result = await atomic.commit();
 
