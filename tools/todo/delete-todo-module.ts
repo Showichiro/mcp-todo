@@ -1,39 +1,39 @@
 import type { Module } from "../../types.ts";
 import { $object, $string } from "@showichiro/validators";
-import { getTodoById } from "./repository/get-todo-by-id.ts";
+import { deleteTodo } from "./repository/delete-todo.ts";
 import { isErr } from "../../utils/result.ts";
 import { withKv } from "../../kv-factory.ts";
-import { todoToString } from "./todo-to-string.ts";
 
 // 入力バリデーター
-const $getTodoByIdInput = $object(
+const $deleteTodoInput = $object(
   {
     id: $string,
   },
   false,
 );
 
-export const GetTodoByIdModule: Module = {
+export const DeleteTodoModule: Module = {
   tool: {
-    name: "mcp_todo_get_by_id",
-    description: "Get a todo item by its ID",
+    name: "mcp_todo_delete",
+    description: "Delete a todo item by its ID",
     inputSchema: {
       type: "object",
       properties: {
         id: {
           type: "string",
-          description: "The ID of the todo item to retrieve",
+          description: "The ID of the todo item to delete",
         },
       },
+      required: ["id"],
     },
   },
   handler: async (args: unknown) => {
-    if (!$getTodoByIdInput(args)) {
+    if (!$deleteTodoInput(args)) {
       return {
         content: [
           {
             type: "text",
-            text: "Invalid input: Please provide a valid todo ID as a string",
+            text: "Invalid input: Please provide a valid todo ID",
           },
         ],
         isError: true,
@@ -43,14 +43,14 @@ export const GetTodoByIdModule: Module = {
     const { id } = args;
 
     try {
-      const result = await withKv((kv) => getTodoById(kv, id));
+      const result = await withKv((kv) => deleteTodo(kv, id));
 
       if (isErr(result)) {
         return {
           content: [
             {
               type: "text",
-              text: `Failed to get todo: ${result.error.message}`,
+              text: `Failed to delete todo: ${result.error.message}`,
             },
           ],
           isError: true,
@@ -61,11 +61,7 @@ export const GetTodoByIdModule: Module = {
         content: [
           {
             type: "text",
-            text: "Todo found:",
-          },
-          {
-            type: "text",
-            text: todoToString(result.data.todo),
+            text: `Todo with ID ${result.data.id} deleted successfully`,
           },
         ],
         isError: false,

@@ -3,6 +3,9 @@ import type { Todo } from "./types.ts";
 export const todoToString = (todo: Todo) => {
   const parts: string[] = [];
 
+  // Add ID
+  parts.push(`#id:${todo.id}`);
+
   // Add completion status
   if (todo.completed) {
     parts.push("x");

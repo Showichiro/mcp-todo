@@ -1,15 +1,11 @@
 import type { Module } from "../../types.ts";
-import { $object, $optional, type Validator } from "@showichiro/validators";
+import { $object, $optional } from "@showichiro/validators";
 import { getTodosByPriority } from "./repository/get-todos-by-priority.ts";
 import { isErr } from "../../utils/result.ts";
 import { withKv } from "../../kv-factory.ts";
 import { todoToString } from "./todo-to-string.ts";
-import { priorities, type Priority } from "./types.ts";
-
-// カスタムバリデーター: 優先度の文字列チェック
-const $priority: Validator<Priority> = (val: unknown): val is Priority => {
-  return typeof val === "string" && priorities.includes(val as Priority);
-};
+import { priorities } from "./types.ts";
+import { $priority } from "./validators.ts";
 
 // 入力バリデーター
 const $getTodosByPriorityInput = $object(
@@ -49,10 +45,13 @@ export const GetTodosByPriorityModule: Module = {
       };
     }
 
-    const { priority } = args as { priority?: Priority };
+    const { priority } = args;
+    const validPriority = priority === null ? undefined : priority;
 
     try {
-      const result = await withKv((kv) => getTodosByPriority(kv, priority));
+      const result = await withKv((kv) =>
+        getTodosByPriority(kv, validPriority)
+      );
 
       if (isErr(result)) {
         return {
@@ -73,8 +72,8 @@ export const GetTodosByPriorityModule: Module = {
           content: [
             {
               type: "text",
-              text: priority
-                ? `No todos found with priority ${priority}`
+              text: validPriority
+                ? `No todos found with priority ${validPriority}`
                 : "No todos found",
             },
           ],
@@ -88,8 +87,8 @@ export const GetTodosByPriorityModule: Module = {
         content: [
           {
             type: "text",
-            text: priority
-              ? `Todos with priority ${priority}:`
+            text: validPriority
+              ? `Todos with priority ${validPriority}:`
               : "All todos by priority:",
           },
           {
