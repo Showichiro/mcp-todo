@@ -5,6 +5,8 @@ import { GetTodoByIdModule } from "./tools/todo/get-by-id-module.ts";
 import { GetAllTodosModule } from "./tools/todo/get-all-todo-module.ts";
 import { GetTodosByPriorityModule } from "./tools/todo/get-todos-by-priority-module.ts";
 import { GetTodosByContextModule } from "./tools/todo/get-todos-by-context-module.ts";
+import { GetTodosByProjectModule } from "./tools/todo/get-todos-by-project-module.ts";
+import { GetTodosByCompletionModule } from "./tools/todo/get-todos-by-completion-module.ts";
 
 if (import.meta.main) {
   const server = createServer({
@@ -16,6 +18,8 @@ if (import.meta.main) {
       GetAllTodosModule,
       GetTodosByPriorityModule,
       GetTodosByContextModule,
+      GetTodosByProjectModule,
+      GetTodosByCompletionModule,
     ],
   });
 
