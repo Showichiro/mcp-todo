@@ -45,6 +45,8 @@ Clineなどのクライアントツールで使用するために、MCPサーバ
 - `mcp_todo_get_by_context`: コンテキストによってTodoアイテムをフィルタリング
 - `mcp_todo_get_by_project`: プロジェクトによってTodoアイテムをフィルタリング
 - `mcp_todo_get_by_completion`: 完了状態によってTodoアイテムをフィルタリング
+- `mcp_todo_update`: IDを指定してTodoアイテムを更新
+- `mcp_todo_delete`: IDを指定してTodoアイテムを削除
 
 ## Todo形式
 
@@ -78,6 +80,30 @@ x (A) 2023-04-01 2023-03-15 レポートを完成させる +仕事 @オフィス
   "tags": {
     "締切": "2023-04-15"
   }
+}
+```
+
+### Todoの更新
+
+```json
+{
+  "id": "todo_id",
+  "completed": true,
+  "priority": "A",
+  "description": "更新後の説明",
+  "projects": ["仕事"],
+  "contexts": ["オフィス"],
+  "tags": {
+    "締切": "2024-04-01"
+  }
+}
+```
+
+### Todoの削除
+
+```json
+{
+  "id": "todo_id"
 }
 ```
 
