@@ -73,4 +73,4 @@ jobs:
             ${{ runner.os }}-deno-
 
       - name: Run tests
-        run: deno test
+        run: deno test --unstable-kv
