@@ -1,6 +1,7 @@
 import { err, ok, type Result } from "../../../utils/result.ts";
 import type { Todo } from "../types.ts";
-import { byContextKey, todoKey } from "../constants.ts";
+import { byContextKey } from "../constants.ts";
+import { getContextIndexListKey, getTodoKey } from "../utils/get-kv-key.ts";
 
 export type GetTodosByContextSuccess = {
   todos: Todo[];
@@ -20,11 +21,13 @@ export const getTodosByContext = async (
 
     if (context) {
       // 特定のコンテキストのTodoを取得
-      const entries = kv.list<string>({ prefix: [byContextKey, context] });
+      const entries = kv.list<string>({
+        prefix: getContextIndexListKey(context),
+      });
 
       for await (const entry of entries) {
         const todoId = entry.value;
-        const todoResult = await kv.get<Todo>([todoKey, todoId]);
+        const todoResult = await kv.get<Todo>(getTodoKey(todoId));
 
         if (todoResult.value) {
           todos.push(todoResult.value);
@@ -36,7 +39,7 @@ export const getTodosByContext = async (
 
       for await (const entry of entries) {
         const todoId = entry.value;
-        const todoResult = await kv.get<Todo>([todoKey, todoId]);
+        const todoResult = await kv.get<Todo>(getTodoKey(todoId));
 
         if (todoResult.value) {
           todos.push(todoResult.value);
