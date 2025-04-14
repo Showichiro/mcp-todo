@@ -35,7 +35,9 @@ export const GetAllTodosModule: Module = {
         };
       }
 
-      const todoStrings = result.data.todos.map((todo) => todoToString(todo));
+      const todoStrings = result.data.todos?.map((todo) =>
+        todoToString(todo)
+      ) ?? [];
 
       return {
         content: [
