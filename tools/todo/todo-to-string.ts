@@ -28,19 +28,19 @@ export const todoToString = (todo: Todo) => {
   parts.push(todo.description);
 
   // Add projects
-  todo.projects.forEach((project) => {
+  for (const project of todo.projects) {
     parts.push(`+${project}`);
-  });
+  }
 
   // Add contexts
-  todo.contexts.forEach((context) => {
+  for (const context of todo.contexts) {
     parts.push(`@${context}`);
-  });
+  }
 
   // Add tags
-  Object.entries(todo.tags).forEach(([key, value]) => {
+  for (const [key, value] of Object.entries(todo.tags)) {
     parts.push(`${key}:${value}`);
-  });
+  }
 
   return parts.join(" ");
 };
