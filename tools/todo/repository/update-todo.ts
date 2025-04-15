@@ -33,9 +33,14 @@ export const updateTodo = async (
 
     // Update todo with new values
     const updatedTodo: Todo = {
-      ...todo,
-      ...input,
-      // Special handling for completed status
+      id: todo.id,
+      description: input.description ?? todo.description,
+      contexts: input.contexts ?? todo.contexts,
+      projects: input.projects ?? todo.projects,
+      priority: input.priority ?? todo.priority,
+      completed: input.completed ?? todo.completed,
+      tags: input.tags ?? todo.tags,
+      createdAt: todo.createdAt,
       completedAt: input.completed === true
         ? todo.completedAt || now
         : input.completed === false
