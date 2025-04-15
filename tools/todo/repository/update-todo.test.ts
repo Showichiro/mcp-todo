@@ -57,7 +57,7 @@ describe("updateTodo", () => {
     }
     assertEquals(getTodoResult.data.todo, updatedTodo);
 
-    await kv.close();
+    kv.close();
   });
 
   it("should handle completion status changes correctly", async () => {
@@ -102,7 +102,7 @@ describe("updateTodo", () => {
     assertEquals(uncompletedResult.data.todo.completed, false);
     assertEquals(uncompletedResult.data.todo.completedAt, undefined);
 
-    await kv.close();
+    kv.close();
   });
 
   it("should return error when todo does not exist", async () => {
@@ -119,12 +119,12 @@ describe("updateTodo", () => {
       );
     }
 
-    await kv.close();
+    kv.close();
   });
 
   it("should handle errors gracefully", async () => {
     const kv = await Deno.openKv(":memory:");
-    await kv.close(); // Close KV to force an error
+    kv.close(); // Close KV to force an error
 
     const result = await updateTodo(kv, "some-id", {
       description: "Updated description",

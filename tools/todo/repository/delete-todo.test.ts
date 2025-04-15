@@ -45,24 +45,27 @@ describe("deleteTodo", () => {
     const todoAfterDelete = await kv.get(getTodoKey(createResult.data.id));
     assertEquals(todoAfterDelete.value, null);
 
-    await kv.close();
+    kv.close();
   });
 
   it("should succeed even if todo does not exist", async () => {
     const kv = await Deno.openKv(":memory:");
 
     const result = await deleteTodo(kv, "non-existent-id");
-    assertEquals(result.ok, true);
-    if (result.ok) {
-      assertEquals(result.data.id, "non-existent-id");
+    assertEquals(result.ok, false);
+    if (!result.ok) {
+      assertEquals(
+        result.error.message,
+        "Todo with id non-existent-id not found",
+      );
     }
 
-    await kv.close();
+    kv.close();
   });
 
   it("should handle errors gracefully", async () => {
     const kv = await Deno.openKv(":memory:");
-    await kv.close(); // Close KV to force an error
+    kv.close(); // Close KV to force an error
 
     const result = await deleteTodo(kv, "some-id");
     assertEquals(result.ok, false);
