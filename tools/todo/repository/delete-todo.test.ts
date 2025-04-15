@@ -54,7 +54,10 @@ describe("deleteTodo", () => {
     const result = await deleteTodo(kv, "non-existent-id");
     assertEquals(result.ok, false);
     if (!result.ok) {
-      assertEquals(result.error.message, "Todo with id non-existent-id not found");
+      assertEquals(
+        result.error.message,
+        "Todo with id non-existent-id not found",
+      );
     }
 
     kv.close();
